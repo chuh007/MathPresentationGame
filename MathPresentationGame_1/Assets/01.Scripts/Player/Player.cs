@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [field:SerializeField] public InputReader PlayerInput {  get; private set; }
+    [SerializeField] private InputReader _inputReader;
     private Dictionary<Type, IPlayerComponent> _componets;
     public PlayerMovement MovementCompo { get; private set; }
 
@@ -16,12 +16,18 @@ public class Player : MonoBehaviour
 
         GetComponentsInChildren<IPlayerComponent>().ToList()
             .ForEach(x=>_componets.Add(x.GetType(),x));
-
+        _componets.Add(_inputReader.GetType(), _inputReader);
         _componets.Values.ToList().ForEach(compo => compo.Initialize(this));
         MovementCompo = GetComponent<PlayerMovement>();
     }
-    private void Update()
+    
+    public T GetCompo<T>()where T : class
     {
-        MovementCompo.SetMoveMent(PlayerInput.Movement);
+        Type type = typeof(T);
+        if(_componets.TryGetValue(type,out IPlayerComponent compo))
+        {
+            return compo as T;
+        }
+        return default;
     }
 }

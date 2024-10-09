@@ -29,6 +29,7 @@ public class InputReader : ScriptableObject, IPlayerActions, IPlayerComponent
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
         worldPos.z = 0;
         MousePositon = worldPos;
+        Debug.Log(MousePositon);
     }
 
     public void OnMovement(InputAction.CallbackContext context)
@@ -38,6 +39,6 @@ public class InputReader : ScriptableObject, IPlayerActions, IPlayerComponent
 
     public void Initialize(Player player)
     {
-        throw new System.NotImplementedException();
+        _Player = player;
     }
 }

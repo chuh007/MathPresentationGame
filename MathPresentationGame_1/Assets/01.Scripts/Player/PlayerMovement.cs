@@ -13,22 +13,17 @@ public class PlayerMovement : MonoBehaviour, IPlayerComponent
 
     public Rigidbody2D _rbCompo { get; private set; }
 
-    protected Vector2 movement;
-
     private Player _player;
-
-    private void Awake()
-    {
-        _rbCompo = GetComponent<Rigidbody2D>();
-    }
-    public void SetMoveMent(Vector2 v)
-    {
-        movement = v;
-    }
+    private InputReader _inputReader;
+    
+    
     public void Initialize(Player player)
     {
         _player = player;
+        _inputReader =_player.GetCompo<InputReader>();
+        _rbCompo = GetComponent<Rigidbody2D>();
     }
+    
     private void FixedUpdate()
     {
         UpdateMovement();
@@ -36,6 +31,7 @@ public class PlayerMovement : MonoBehaviour, IPlayerComponent
 
     private void UpdateMovement()
     {
+        Vector2 movement = _inputReader.Movement;
         _rbCompo.velocity = movement*_moveSpeed;
     }
 }
