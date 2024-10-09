@@ -37,6 +37,5 @@ public class PlayerMovement : MonoBehaviour, IPlayerComponent
     private void UpdateMovement()
     {
         _rbCompo.velocity = movement*_moveSpeed;
-        //_rbCompo.velocity = movement * _moveSpeed;
     }
 }
